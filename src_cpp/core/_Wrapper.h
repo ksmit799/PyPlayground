@@ -1,0 +1,4 @@
+namespace playground
+{
+
+} // namespace playground
