@@ -8,6 +8,8 @@ from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 from distutils.version import LooseVersion
 
+from shader_transpiler import ShaderTranspiler
+
 
 class CMakeExtension(Extension):
 
@@ -30,6 +32,15 @@ class CMakeBuild(build_ext):
 			if cmake_version < '3.2.0':
 				raise RuntimeError("CMake >= 3.2.0 is required on Windows")
 
+		# Transpile shader files into source files.
+		print("Transpiling Shaders...")
+
+		transpiler = ShaderTranspiler()
+		transpiler.transpileDir('.\\src_cpp\\shaders')
+		
+		print("Finished transpiling shaders.")
+
+		# Build extensions.
 		for ext in self.extensions:
 			self.build_extension(ext)
 
