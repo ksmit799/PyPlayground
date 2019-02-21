@@ -49,12 +49,13 @@ void Shader::checkCompileErrors(const GLuint &shader, const std::string &type)
 {
 	GLint success;
 	GLchar infoLog[1024];
-	if(type != "PROGRAM")
+
+	if (type != "PROGRAM")
 	{
 		glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-		if(!success)
+		if (!success)
 		{
-			glGetShaderInfoLog(shader, 1024, NULL, infoLog);
+			glGetShaderInfoLog(shader, 1024, nullptr, infoLog);
 			PlaygroundBase::instance()->notify->error(
 				"An error occoured while attempting to compile the shader. Error log: " + std::string(infoLog));
 		}
@@ -62,9 +63,9 @@ void Shader::checkCompileErrors(const GLuint &shader, const std::string &type)
 	else
 	{
 		glGetProgramiv(shader, GL_LINK_STATUS, &success);
-		if(!success)
+		if (!success)
 		{
-			glGetProgramInfoLog(shader, 1024, NULL, infoLog);
+			glGetProgramInfoLog(shader, 1024, nullptr, infoLog);
 			PlaygroundBase::instance()->notify->error(
 				"An error occoured while attempting to link the shader. Error log: " + std::string(infoLog));
 		}
