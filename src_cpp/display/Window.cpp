@@ -14,7 +14,7 @@ Window::Window(const char *title, const int &width, const int &height,
 	const bool &fullscreen, const bool &resizable, const bool &grabInput) : width(width), height(height)
 {
 	// Window constructor flags.
-	uint32_t flags = 0;
+	unsigned int flags = 0;
 	if (fullscreen)
 		flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 	if (resizable)
