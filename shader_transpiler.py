@@ -12,7 +12,7 @@ class ShaderTranspiler:
 namespace playground
 {
 
-class %s
+class %sShader
 {
 
 public:
@@ -32,11 +32,11 @@ public:
 namespace playground
 {
 
-const std::string %s::vertSource = R"(
+const std::string %sShader::vertSource = R"(
 %s
 )";
 
-const std::string %s::fragSource = R"(
+const std::string %sShader::fragSource = R"(
 %s
 )";
 
