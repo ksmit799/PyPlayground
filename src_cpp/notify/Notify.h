@@ -18,6 +18,7 @@ public:
 	void error(const std::string &message);
 
 private:
+	std::string getTime();
 
 };
 
