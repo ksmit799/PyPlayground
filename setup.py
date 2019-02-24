@@ -61,19 +61,25 @@ class CMakeBuild(build_ext):
 			cmake_args += ['-DCMAKE_BUILD_TYPE=' + cfg]
 			build_args += ['--', '-j2']
 
-		sdl2_path = os.environ.get('SDL2', os.getcwd() + '\\libs\\SDL2-devel-2.0.9-VC\\SDL2-2.0.9')
-		glew_path = os.environ.get('GLEW', os.getcwd() + '\\libs\\glew-2.1.0')
+		sdl2_path = os.environ.get('SDL2', os.getcwd() + '\\libs\\SDL2')
+		glew_path = os.environ.get('GLEW', os.getcwd() + '\\libs\\glew')
 		glm_path = os.environ.get('GLM', os.getcwd() + '\\libs\\glm')
-			
-		cmake_args += ['-DSDL2MAIN_LIBRARY=' + sdl2_path + '\\lib\\x86\\SDL2main.lib']
+		
 		cmake_args += ['-DSDL2MAIN_DIR=' + sdl2_path]
-		cmake_args += ['-DSDL2_INCLUDE_DIR=' + sdl2_path + '\\include']
-		cmake_args += ['-DSDL2_LIBRARY=' + sdl2_path + '\\lib\\x86\\SDL2.lib']
-		
 		cmake_args += ['-DGLEW_INCLUDE_DIR=' + glew_path + '\\include']
-		cmake_args += ['-DGLEW_LIBRARY=' + glew_path + '\\lib\\Release\\Win32\\glew32.lib']
-		
 		cmake_args += ['-DGLM_INCLUDE_DIR=' + glm_path]
+
+		if sys.platform == 'win32':
+			cmake_args += ['-DSDL2_INCLUDE_DIR=' + sdl2_path + '\\include']
+			cmake_args += ['-DSDL2MAIN_LIBRARY=' + sdl2_path + '\\lib\\x86\\SDL2main.lib']
+			cmake_args += ['-DSDL2_LIBRARY=' + sdl2_path + '\\lib\\x86\\SDL2.lib']
+			cmake_args += ['-DGLEW_LIBRARY=' + glew_path + '\\lib\\Release\\Win32\\glew32.lib']
+
+		elif sys.platform == 'darwin':
+			cmake_args += ['-DSDL2_INCLUDE_DIR=' + sdl2_path + '\\include\\SDL2']
+			cmake_args += ['-DSDL2MAIN_LIBRARY=' + sdl2_path + '\\lib\\libSDL2main.a']
+			cmake_args += ['-DSDL2_LIBRARY=' + sdl2_path + '\\lib\\libSDL2.a']
+			cmake_args += ['-DGLEW_LIBRARY=' + glew_path + '\\lib\\libGLEW.a']
 
 		env = os.environ.copy()
 		env['CXXFLAGS'] = '{} -DVERSION_INFO=\\"{}\\"'.format(env.get('CXXFLAGS', ''),

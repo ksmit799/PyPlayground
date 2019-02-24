@@ -26,8 +26,8 @@ void PlaygroundBase::init()
 	// Initialize SDL2.
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
-		//throw std::exception("Unable to initialize SDL: " + SDL_GetError());
-		throw std::exception("Unable to initialize SDL");
+		py::print("[ERROR]: Unable to initialize SDL:", SDL_GetError());
+		throw std::exception();
 	}
 }
 

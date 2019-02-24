@@ -38,8 +38,8 @@ Window::Window(const char *title, const int &width, const int &height,
 	if (!this->window)
 	{
 		// Throw an exception if window creation failed.
-		//throw std::exception("Could not create window: " + SDL_GetError());
-		throw std::exception("Could not create window");
+		//PlaygroundBase::instance()->notify->error("Could not create window:" + SDL_GetError());
+		throw std::exception();
 	}
 
 	// Create a new OpenGL context for our window.
@@ -47,16 +47,16 @@ Window::Window(const char *title, const int &width, const int &height,
 	if (!this->context)
 	{
 		// If an OpenGL context could not be acquired...
-		//throw std::exception("Could not create OpenGL context: " + SDL_GetError());
-		throw std::exception("Could not create OpenGL context");
+		//PlaygroundBase::instance()->notify->error("Could not create OpenGL context:" + SDL_GetError());
+		throw std::exception();
 	}
 
 	// Initialize GLEW.
 	if (glewInit() != GLEW_OK)
 	{
 		// Throw an exception if GLEW couldn't be initialized (OpenGL).
-		//throw std::exception("Failed to initialize GLEW (OpenGL): " + SDL_GetError());
-		throw std::exception("Failed to initialize GLEW (OpenGL)");
+		//PlaygroundBase::instance()->notify->error("Failed to initialize GLEW (OpenGL):" + SDL_GetError());
+		throw std::exception();
 	}
 
 	// Create our root node.
