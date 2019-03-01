@@ -18,23 +18,23 @@ Shader::Shader(const std::string &vertSource, const std::string &fragSource)
 	unsigned int vertex, fragment;
 
 	vertex = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertex, 1, &vertCode, NULL);
+	glShaderSource(vertex, 1, &vertCode, nullptr);
 	glCompileShader(vertex);
 
 	this->checkCompileErrors(vertex, "VERTEX");
 	
 	fragment = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragment, 1, &fragCode, NULL);
+	glShaderSource(fragment, 1, &fragCode, nullptr);
 	glCompileShader(fragment);
 
 	this->checkCompileErrors(fragment, "FRAGMENT");
 
-	this->shaderId = glCreateProgram();
-	glAttachShader(this->shaderId, vertex);
-	glAttachShader(this->shaderId, fragment);
-	glLinkProgram(this->shaderId);
+	this->programId = glCreateProgram();
+	glAttachShader(this->programId, vertex);
+	glAttachShader(this->programId, fragment);
+	glLinkProgram(this->programId);
 
-	this->checkCompileErrors(this->shaderId, "PROGRAM");
+	this->checkCompileErrors(this->programId, "PROGRAM");
 
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
@@ -42,7 +42,7 @@ Shader::Shader(const std::string &vertSource, const std::string &fragSource)
 
 Shader::~Shader()
 {
-	glDeleteProgram(this->shaderId);
+	glDeleteProgram(this->programId);
 }
 
 void Shader::checkCompileErrors(const GLuint &shader, const std::string &type)
@@ -73,6 +73,14 @@ void Shader::checkCompileErrors(const GLuint &shader, const std::string &type)
 }
 
 void wrap_shaders_shader(py::module &m)
-{}
+{
+	py::class_<Shader>(m, "Shader")
+
+		// __init__
+		.def(py::init<std::string, std::string>(),
+			py::arg("vertSource"), py::arg("fragSource"))
+
+		.def_readonly("programId", &Shader::programId, "");
+}
 
 } // namespace playground

@@ -14,7 +14,7 @@ public:
 	Shader(const std::string &vertSource, const std::string &fragSource);
 	~Shader();
 
-	unsigned int shaderId;
+	unsigned int programId;
 
 private:
 	void checkCompileErrors(const GLuint &shader, const std::string &type);

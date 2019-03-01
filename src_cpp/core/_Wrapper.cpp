@@ -16,6 +16,9 @@ void wrap_display_window(py::module &m);
 // Notify namespace.
 void wrap_notify_notify(py::module &m);
 
+// Shaders namespace.
+void wrap_shaders_shader(py::module &m);
+
 // Task namespace.
 void wrap_task_taskmanager(py::module &m);
 
@@ -32,6 +35,10 @@ PYBIND11_MODULE(PyPlayground, m)
 	// Notify sub-module.
 	py::module notify = m.def_submodule("notify", "A submodule of 'notify'");
 	wrap_notify_notify(notify);
+
+	// Shaders sub-module.
+	py::module shaders = m.def_submodule("shaders", "A submodule of 'shaders'");
+	wrap_shaders_shader(shaders);
 
 	// Task sub-module.
 	py::module task = m.def_submodule("task", "A submodule of 'task'");
