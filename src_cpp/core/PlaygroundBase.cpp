@@ -1,6 +1,8 @@
 #include "core/_Wrapper.h"
 #include "core/PlaygroundBase.h"
 
+#include "task/InternalTask.h"
+
 #include <pybind11/pybind11.h>
 
 #include <SDL.h>
@@ -48,6 +50,17 @@ PlaygroundBase::PlaygroundBase()
 	this->taskManager = new TaskManager();
 	this->messenger = new Messenger();
 	this->renderer = new Renderer();
+
+	// Create our two core loops (drives renderer and input).
+	this->taskManager->createTask("inputLoop", 1);
+	this->taskManager->createTask("renderLoop", 4); // Reserve 3/4 for anim/physics.
+
+	// Create our tasks.
+	//InternalTask renderTask(std::bind(&Renderer::render, std::ref(this->renderer)));
+
+	// Bind our tasks.
+	//this->taskManager->bindTask("inputLoop");
+	//this->taskManager->bindTask("renderLoop", renderTask);
 
 	this->renderer->setClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 }

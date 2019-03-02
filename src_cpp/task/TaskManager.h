@@ -2,6 +2,7 @@
 #define TASK_TASKMANAGER_H
 
 #include "task/Task.h"
+#include "task/TaskCollection.h"
 
 #include <mutex>
 #include <map>
@@ -18,15 +19,15 @@ class TaskManager
 public:
 	TaskManager();
 
-	void createTask(const std::string &name, int *rate = nullptr, int *sort = nullptr);
-	void bindTask(const std::string &name, std::function<void()> &f);
+	void createTask(const std::string &name, int sort = 0, int rate = 0);
+	void bindTask(const std::string &name, const Task &f);
 	void tick();
 
 private:
-	std::mutex tickLock;
+	std::mutex tickMutex;
 
 	std::multimap<int, std::string> taskOrder;
-	std::unordered_map<std::string, std::unique_ptr<Task>> nameToTask;
+	std::unordered_map<std::string, std::unique_ptr<TaskCollection>> nameToTask;
 
 };
 

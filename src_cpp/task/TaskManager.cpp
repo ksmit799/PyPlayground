@@ -1,6 +1,8 @@
 #include "core/_Wrapper.h"
 #include "task/TaskManager.h"
 
+#include "core/PlaygroundBase.h"
+
 #include <pybind11/pybind11.h>
 #include <pybind11/functional.h>
 
@@ -10,38 +12,33 @@ namespace playground
 namespace py = pybind11;
 
 TaskManager::TaskManager()
-{
+{}
 
-}
-
-void TaskManager::createTask(const std::string &name, int *rate, int *sort)
+void TaskManager::createTask(const std::string &name, int sort, int rate)
 {
 	if (this->nameToTask.count(name))
 	{
-		py::print("Warning: Attempted to create duplicate task");
+		PlaygroundBase::instance()->notify->warning("Attempted to create duplicate task: " + name);
 		return;
 	}
 
-	if (!rate)
-		*rate = 0;
-
-	if (!sort)
+	if (sort < 1)
 	{
 		if (!this->taskOrder.empty())
-			*sort = (--this->taskOrder.end())->first + 1; // EOM offset by 1.
+			sort = (--this->taskOrder.end())->first + 1; // EOM offset by 1.
 		else
-			*sort = 5; // Default to a high-ish value.
+			sort = 5; // Default to a high-ish value.
 	}
 
-	this->taskOrder.insert(std::make_pair(*sort, name));
-	this->nameToTask[name] = std::unique_ptr<Task>(new Task(*rate));
+	this->taskOrder.insert(std::make_pair(sort, name));
+	this->nameToTask[name] = std::unique_ptr<TaskCollection>(new TaskCollection(rate));
 }
 
-void TaskManager::bindTask(const std::string &name, std::function<void()> &f)
+void TaskManager::bindTask(const std::string &name, const Task &f)
 {
 	if (!this->nameToTask.count(name))
 	{
-		py::print("Warning: Attempted to bind to non-existent task");
+		PlaygroundBase::instance()->notify->warning("Attempted to bind to non-existent task: " + name);
 		return;
 	}
 
@@ -50,14 +47,14 @@ void TaskManager::bindTask(const std::string &name, std::function<void()> &f)
 
 void TaskManager::tick()
 {
-	this->tickLock.lock();
+	this->tickMutex.lock();
 
 	for (auto task = this->taskOrder.cbegin(); task != this->taskOrder.cend(); ++task)
 	{
 		this->nameToTask[task->second]->tick();
 	}
 
-	this->tickLock.unlock();
+	this->tickMutex.unlock();
 }
 
 void wrap_task_taskmanager(py::module &m)
@@ -68,7 +65,7 @@ void wrap_task_taskmanager(py::module &m)
 		.def(py::init<>())
 
 		.def("createTask", &TaskManager::createTask, "",
-			py::arg("name"), py::arg("rate") = nullptr, py::arg("sort") = nullptr)
+			py::arg("name"), py::arg("sort") = 0, py::arg("rate") = 0)
 
 		.def("bindTask", &TaskManager::bindTask, "")
 		.def("tick", &TaskManager::tick, "");
