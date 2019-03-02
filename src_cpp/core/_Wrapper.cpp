@@ -13,6 +13,9 @@ void wrap_core_playgroundbase(py::module &m);
 // Display namespace.
 void wrap_display_window(py::module &m);
 
+// Messenger namespace.
+void wrap_messenger_messenger(py::module &m);
+
 // Notify namespace.
 void wrap_notify_notify(py::module &m);
 
@@ -31,6 +34,10 @@ PYBIND11_MODULE(PyPlayground, m)
 	// Display sub-module.
 	py::module display = m.def_submodule("display", "A submodule of 'display'");
 	wrap_display_window(display);
+
+	// Messenger sub-module.
+	py::module messenger = m.def_submodule("messenger", "A submodule of 'messenger'");
+	wrap_messenger_messenger(messenger);
 
 	// Notify sub-module.
 	py::module notify = m.def_submodule("notify", "A submodule of 'notify'");

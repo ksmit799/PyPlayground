@@ -12,6 +12,8 @@ Messenger::Messenger()
 {}
 
 void wrap_messenger_messenger(py::module &m)
-{}
+{
+	py::class_<Messenger>(m, "Messenger");
+}
 
 } // namespace playground
