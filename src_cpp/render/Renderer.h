@@ -22,6 +22,7 @@ public:
 	void setClearColor(const float &r, const float &g, const float &b, const float &a);
 
 private:
+	unsigned int currentProgramId; // Current bound shader program id.
 	std::vector<Window*> windows;
 
 };

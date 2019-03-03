@@ -1,5 +1,5 @@
 #include "core/_Wrapper.h"
-#include "renderer/Renderer.h"
+#include "render/Renderer.h"
 
 #include <pybind11/pybind11.h>
 
@@ -47,7 +47,6 @@ void Renderer::render()
 
 		if (window->activeCamera)
 		{
-			//glUseProgram(currentShader -> GetProgram());
 			//UpdateShaderMatrices();
 
 			/*
@@ -63,25 +62,28 @@ void Renderer::render()
 			this->drawNode(window->rootNode);
 		}
 
-		glUseProgram(0);
-
 		SDL_GL_SwapWindow(window->window);
 	}
 }
 
 void Renderer::drawNode(SceneNode *node)
 {
-	/*
-	if (node->mesh)
+	// Determine whether we need to 're-use' the shader.
+	unsigned int nodeProgramId = node->shader->programId;
+	if (nodeProgramId != this->currentProgramId)
 	{
-		node->draw();
+		this->currentProgramId = nodeProgramId;
+		glUseProgram(nodeProgramId);
 	}
 
+	// Draw.
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+
+	// Draw each child of our node.
 	for (auto childNode : node->children)
 	{
 		this->drawNode(childNode);
 	}
-	*/
 }
 
 void Renderer::addWindow(Window *window)
@@ -94,7 +96,10 @@ void Renderer::setClearColor(const float &r, const float &g, const float &b, con
 	glClearColor(r, g, b, a);
 }
 
-void wrap_renderer_renderer(py::module &m)
-{}
+void wrap_render_renderer(py::module &m)
+{
+	py::class_<Renderer>(m, "Renderer")
+		.def("render", &Renderer::render, ""); // TODO: Use TaskManager and don't expose.
+}
 
 } // namespace playground

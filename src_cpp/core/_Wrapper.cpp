@@ -19,6 +19,9 @@ void wrap_messenger_messenger(py::module &m);
 // Notify namespace.
 void wrap_notify_notify(py::module &m);
 
+// Render namespace.
+void wrap_render_renderer(py::module &m);
+
 // Shaders namespace.
 void wrap_shaders_shader(py::module &m);
 
@@ -42,6 +45,10 @@ PYBIND11_MODULE(PyPlayground, m)
 	// Notify sub-module.
 	py::module notify = m.def_submodule("notify", "A submodule of 'notify'");
 	wrap_notify_notify(notify);
+
+	// Render sub-module.
+	py::module render = m.def_submodule("render", "A submodule of 'render'");
+	wrap_render_renderer(render);
 
 	// Shaders sub-module.
 	py::module shaders = m.def_submodule("shaders", "A submodule of 'shaders'");

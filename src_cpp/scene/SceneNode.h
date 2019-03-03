@@ -18,6 +18,8 @@ public:
 	virtual void draw();
 	virtual void update();
 
+	std::vector<SceneNode*> children;
+
 	void addChild(SceneNode *node);
 
 protected:
@@ -27,7 +29,6 @@ protected:
 	int transform;
 	glm::vec3 scale;
 	glm::vec4 color;
-	std::vector<SceneNode*> children;
 
 };
 
