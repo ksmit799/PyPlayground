@@ -1,5 +1,5 @@
 #include "core/_Wrapper.h"
-#include "display/Camera.h"
+#include "scene/CameraNode.h"
 
 #include <pybind11/pybind11.h>
 
@@ -59,7 +59,7 @@ void Camera::updateVectors()
 	this->upVector = glm::normalize(glm::cross(this->rightVector, this->frontVector));
 }
 
-void wrap_display_camera(py::module &m)
+void wrap_scene_cameranode(py::module &m)
 {}
 
 } // namespace playground

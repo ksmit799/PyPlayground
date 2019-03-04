@@ -1,8 +1,8 @@
 #ifndef DISPLAY_WINDOW_H
 #define DISPLAY_WINDOW_H
 
-#include "display/Camera.h"
 #include "scene/SceneNode.h"
+#include "scene/CameraNode.h"
 
 #include <pybind11/pybind11.h>
 
@@ -29,8 +29,8 @@ public:
 
 	SDL_Window *window;
 	SDL_GLContext context;
-	Camera *activeCamera;
 	SceneNode *rootNode;
+	CameraNode *activeCamera;
 
 	void addChild(SceneNode *node);
 

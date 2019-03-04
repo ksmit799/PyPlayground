@@ -1,19 +1,20 @@
-#ifndef DISPLAY_CAMERA_H
-#define DISPLAY_CAMERA_H
+#ifndef SCENE_CAMERANODE_H
+#define SCENE_CAMERANODE_H
 
-#include <glm/vec3.hpp>
+#include "scene/SceneNode.h"
+
 #include <glm/mat4x4.hpp>
 
 namespace playground
 {
 
-class Camera
+class CameraNode : public SceneNode
 {
 
 public:
-	Camera();
-	Camera(const glm::vec3 &transform); // Vector constructor.
-	Camera(const float &x, const float &y, const float &z); // Scalar constructor.
+	CameraNode();
+	CameraNode(const glm::vec3 &transform); // Vector constructor.
+	CameraNode(const float &x, const float &y, const float &z); // Scalar constructor.
 
 	// Euler angles.
 	float zoom = 45.0f;
@@ -37,4 +38,4 @@ private:
 
 } // namespace playground
 
-#endif // DISPLAY_CAMERA_H
+#endif // SCENE_CAMERANODE_H
