@@ -22,8 +22,6 @@ void PlaygroundBase::init()
 		py::print("[WARNING]: Attempted to call PlaygroundBase init() more than once!");
 		return;
 	}
-
-	initialized = true;
 	
 	// Initialize SDL2.
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -31,6 +29,8 @@ void PlaygroundBase::init()
 		py::print("[ERROR]: Unable to initialize SDL:", SDL_GetError());
 		throw std::exception();
 	}
+
+	initialized = true;
 }
 
 PlaygroundBase* PlaygroundBase::instance()

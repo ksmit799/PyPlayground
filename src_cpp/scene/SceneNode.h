@@ -1,6 +1,8 @@
 #ifndef SCENE_SCENENODE_H
 #define SCENE_SCENENODE_H
 
+#include "shaders/Shader.h"
+
 #include <vector>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
@@ -21,6 +23,8 @@ public:
 	std::vector<SceneNode*> children;
 
 	void addChild(SceneNode *node);
+
+	Shader *shader;
 
 protected:
 	SceneNode *parent;

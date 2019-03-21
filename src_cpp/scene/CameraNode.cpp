@@ -10,22 +10,22 @@ namespace playground
 
 namespace py = pybind11;
 
-Camera::Camera() : transform(glm::vec3(0.0f, 0.0f, 0.0f)), worldUpVector(upVector)
+CameraNode::CameraNode() : transform(glm::vec3(0.0f, 0.0f, 0.0f)), worldUpVector(upVector)
 {}
 
-Camera::Camera(const glm::vec3 &transform) : transform(transform), worldUpVector(upVector)
+CameraNode::CameraNode(const glm::vec3 &transform) : transform(transform), worldUpVector(upVector)
 {}
 
-Camera::Camera(const float &x, const float &y, const float &z)
+CameraNode::CameraNode(const float &x, const float &y, const float &z)
 	: transform(glm::vec3(x, y, z)), worldUpVector(upVector)
 {}
 
-glm::mat4 Camera::getViewMatrix()
+glm::mat4 CameraNode::getViewMatrix()
 {
 	return glm::lookAt(this->transform, this->transform + this->frontVector, this->upVector);
 }
 
-void Camera::handleOffset(const float &xOffset, const float &yOffset)
+void CameraNode::handleOffset(const float &xOffset, const float &yOffset)
 {
 	this->yaw += xOffset;
 	this->pitch += yOffset;
@@ -45,7 +45,7 @@ void Camera::handleOffset(const float &xOffset, const float &yOffset)
 	this->updateVectors();
 }
 
-void Camera::updateVectors()
+void CameraNode::updateVectors()
 {
 	// Calculate the new Front vector
 	glm::vec3 front;

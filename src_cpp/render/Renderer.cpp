@@ -43,6 +43,7 @@ void Renderer::render()
 	{
 		SDL_GL_MakeCurrent(window->window, window->context);
 
+		glClearColor(0.5f, 0.0, 0.0, 1.0);
 		glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
 		if (window->activeCamera)
