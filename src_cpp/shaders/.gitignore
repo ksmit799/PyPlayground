@@ -1,5 +1,0 @@
-*.cpp
-*.h
-
-!Shader.cpp
-!Shader.h

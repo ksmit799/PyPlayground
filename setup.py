@@ -8,15 +8,11 @@ from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 from distutils.version import LooseVersion
 
-from shader_transpiler import ShaderTranspiler
-
-
 class CMakeExtension(Extension):
 
 	def __init__(self, name, sourcedir=''):
 		Extension.__init__(self, name, sources=[])
 		self.sourcedir = os.path.abspath(sourcedir)
-
 
 class CMakeBuild(build_ext):
 	
@@ -31,14 +27,6 @@ class CMakeBuild(build_ext):
 			cmake_version = LooseVersion(re.search(r'version\s*([\d.]+)', out.decode()).group(1))
 			if cmake_version < '3.2.0':
 				raise RuntimeError("CMake >= 3.2.0 is required on Windows")
-
-		# Transpile shader files into source files.
-		print("Transpiling Shaders...")
-
-		transpiler = ShaderTranspiler()
-		transpiler.transpileDir('.\\src_cpp\\shaders')
-		
-		print("Finished transpiling shaders.")
 
 		# Build extensions.
 		for ext in self.extensions:
@@ -60,26 +48,6 @@ class CMakeBuild(build_ext):
 		else:
 			cmake_args += ['-DCMAKE_BUILD_TYPE=' + cfg]
 			build_args += ['--', '-j2']
-
-		sdl2_path = os.environ.get('SDL2', os.getcwd() + '\\libs\\SDL2')
-		glew_path = os.environ.get('GLEW', os.getcwd() + '\\libs\\glew')
-		glm_path = os.environ.get('GLM', os.getcwd() + '\\libs\\glm')
-		
-		cmake_args += ['-DSDL2MAIN_DIR=' + sdl2_path]
-		cmake_args += ['-DGLEW_INCLUDE_DIR=' + glew_path + '\\include']
-		cmake_args += ['-DGLM_INCLUDE_DIR=' + glm_path]
-
-		if sys.platform == 'win32':
-			cmake_args += ['-DSDL2_INCLUDE_DIR=' + sdl2_path + '\\include']
-			cmake_args += ['-DSDL2MAIN_LIBRARY=' + sdl2_path + '\\lib\\x86\\SDL2main.lib']
-			cmake_args += ['-DSDL2_LIBRARY=' + sdl2_path + '\\lib\\x86\\SDL2.lib']
-			cmake_args += ['-DGLEW_LIBRARY=' + glew_path + '\\lib\\Release\\Win32\\glew32.lib']
-
-		elif sys.platform == 'darwin':
-			cmake_args += ['-DSDL2_INCLUDE_DIR=' + sdl2_path + '\\include\\SDL2']
-			cmake_args += ['-DSDL2MAIN_LIBRARY=' + sdl2_path + '\\lib\\libSDL2main.a']
-			cmake_args += ['-DSDL2_LIBRARY=' + sdl2_path + '\\lib\\libSDL2.a']
-			cmake_args += ['-DGLEW_LIBRARY=' + glew_path + '\\lib\\libGLEW.a']
 
 		env = os.environ.copy()
 		env['CXXFLAGS'] = '{} -DVERSION_INFO=\\"{}\\"'.format(env.get('CXXFLAGS', ''),

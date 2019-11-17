@@ -1,47 +1,24 @@
-#ifndef DISPLAY_WINDOW_H
-#define DISPLAY_WINDOW_H
+#ifndef DISPLAY_WINDOW_H_
+#define DISPLAY_WINDOW_H_
 
-#include "scene/SceneNode.h"
-#include "scene/CameraNode.h"
+#include "SDL.h"
 
-#include <pybind11/pybind11.h>
+namespace playground {
 
-#include <GL/glew.h>
-#include <SDL.h>
-#include <SDL_opengl.h>
-#include <string>
+class PlaygroundBase;
 
-namespace playground
-{
+class Window {
+ public:
+  Window(PlaygroundBase* playground);
+  ~Window();
 
-namespace py = pybind11;
+  SDL_Window* get_sdl_window();
 
-class Window
-{
-
-public:
-	Window(const char *title = nullptr, const int &width = 640, const int &height = 480,
-		const bool &fullscreen = false, const bool &resizable = true, const bool &grabInput = false);
-	~Window();
-
-	int width;
-	int height;
-
-	SDL_Window *window;
-	SDL_GLContext context;
-	SceneNode *rootNode;
-	CameraNode *activeCamera;
-
-	void addChild(SceneNode *node);
-
-	void setTitle(const char *title);
-	void setBordered(const bool &state);
-	void setIcon(const std::string &iconPath);
-
-private:
-
+ private:
+  PlaygroundBase* playground_ptr_;
+  SDL_Window* sdl_window_ptr_;
 };
 
 } // namespace playground
 
-#endif // DISPLAY_WINDOW_H
+#endif // DISPLAY_WINDOW_H_

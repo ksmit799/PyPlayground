@@ -1,106 +1,69 @@
-#include "core/_Wrapper.h"
-#include "render/Renderer.h"
+#include "render/renderer.h"
 
-#include <pybind11/pybind11.h>
+#include <assert.h>
 
-#include <GL/glew.h>
-#include <SDL_opengl.h>
-#include <glm/mat4x4.hpp>
+#include "pybind11/pybind11.h"
+#include "wrapper.h"
+#include "core/playground_base.h"
 
-namespace playground
-{
+namespace playground {
 
 namespace py = pybind11;
 
-Renderer::Renderer()
-{
-	// OpenGL version.
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+Renderer::Renderer(PlaygroundBase* playground) {
+  playground_ptr_ = playground;
 
-	// OpenGL attributes.
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+  SDL_Window* active_window = playground_ptr_->window->get_sdl_window();
+  assert(active_window != nullptr);
 
-	// Antialiasing.
-	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 8);
+  sdl_renderer_ptr_ = SDL_CreateRenderer(
+    active_window,
+    -1,
+    0
+  );
 
-	glEnable(GL_DEPTH_TEST); // Enable depth testing.
+  // Make sure the creation of the renderer was successful.
+  if (sdl_renderer_ptr_ == nullptr) {
+    py::print("[PLAYGROUND]: A renderer creation error occurred: ", SDL_GetError());
+    throw std::exception("Failed to create renderer");
+  }
 
-	// Enable GLEW experimental.
-	// Allows us to use OpenGL 3.X.
-	glewExperimental = GL_TRUE;
+  SetBackgroundColor(Color::kBlack);
 }
 
-void Renderer::render()
-{
-	for (auto window : this->windows)
-	{
-		SDL_GL_MakeCurrent(window->window, window->context);
-
-		glClearColor(0.5f, 0.0, 0.0, 1.0);
-		glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
-		if (window->activeCamera)
-		{
-			//UpdateShaderMatrices();
-
-			/*
-			// pass projection matrix to shader (note that in this case it could change every frame)
-        	glm::mat4 projection = glm::perspective(glm::radians(window->activeCamera.zoom), (float)window->width / (float)window->height, 0.1f, 100.0f);
-        	ourShader.setMat4("projection", projection);
-
-        	// camera/view transformation
-        	glm::mat4 view = window->activeCamera.getViewMatrix();
-        	ourShader.setMat4("view", view);
-			*/
-
-			this->drawNode(window->rootNode);
-		}
-
-		SDL_GL_SwapWindow(window->window);
-	}
+Renderer::~Renderer() {
+  SDL_DestroyRenderer(sdl_renderer_ptr_);
 }
 
-void Renderer::drawNode(SceneNode *node)
-{
-	// Determine whether we need to 're-use' the shader.
-	unsigned int nodeProgramId = node->shader->programId;
-	if (nodeProgramId != this->currentProgramId)
-	{
-		this->currentProgramId = nodeProgramId;
-		glUseProgram(nodeProgramId);
-	}
+void Renderer::Render() {
+  SDL_Event e;
+  SDL_PollEvent(&e);
 
-	// Draw.
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-
-	// Draw each child of our node.
-	for (auto childNode : node->children)
-	{
-		this->drawNode(childNode);
-	}
+  SDL_RenderClear(sdl_renderer_ptr_);
+  SDL_RenderPresent(sdl_renderer_ptr_);
 }
 
-void Renderer::addWindow(Window *window)
-{
-	this->windows.push_back(window);
+void Renderer::SetBackgroundColor(const Color& color) {
+  SDL_SetRenderDrawColor(sdl_renderer_ptr_,
+                         color.r, color.g,
+                         color.b, color.a);
 }
 
-void Renderer::setClearColor(const float &r, const float &g, const float &b, const float &a)
-{
-	glClearColor(r, g, b, a);
+Color Renderer::GetBackgroundColor() {
+  Color color;
+
+  SDL_GetRenderDrawColor(sdl_renderer_ptr_,
+                         &color.r, &color.g,
+                         &color.b, &color.a);
++
+  return color;
 }
 
-void wrap_render_renderer(py::module &m)
-{
-	py::class_<Renderer>(m, "Renderer")
-		.def("render", &Renderer::render, ""); // TODO: Use TaskManager and don't expose.
+void wrap_render_renderer(py::module& m) {
+  py::class_<Renderer>(m, "Renderer")
+    .def("render", &Renderer::Render, "")
+    .def("set_background_color", &Renderer::SetBackgroundColor, "")
+    .def("get_background_color", &Renderer::GetBackgroundColor, "");
 }
 
 } // namespace playground

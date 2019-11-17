@@ -1,32 +1,28 @@
-#ifndef RENDERER_RENDERER_H
-#define RENDERER_RENDERER_H
+#ifndef RENDER_RENDERER_H_
+#define RENDER_RENDERER_H_
 
-#include "display/Window.h"
-#include "scene/SceneNode.h"
+#include "SDL.h"
+#include "core/color.h"
 
-#include <memory>
+namespace playground {
 
-namespace playground
-{
+class PlaygroundBase;
 
-class Renderer
-{
+class Renderer {
+ public:
+  Renderer(PlaygroundBase* playground);
+  ~Renderer();
 
-public:
-	Renderer();
+  void Render();
 
-	void render();
-	void drawNode(SceneNode *node);
-	void addWindow(Window *window);
+  void SetBackgroundColor(const Color& color);
+  Color GetBackgroundColor();
 
-	void setClearColor(const float &r, const float &g, const float &b, const float &a);
-
-private:
-	unsigned int currentProgramId; // Current bound shader program id.
-	std::vector<Window*> windows;
-
+ private:
+  PlaygroundBase* playground_ptr_;
+  SDL_Renderer* sdl_renderer_ptr_;
 };
 
 } // namespace playground
 
-#endif // RENDERER_RENDERER_H
+#endif // RENDER_RENDERER_H_
