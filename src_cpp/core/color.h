@@ -20,6 +20,15 @@ class Color {
 
   static const Color kBlack;
   static const Color kWhite;
+  static const Color kClear;
+  static const Color kRed;
+  static const Color kGreen;
+  static const Color kBlue;
+  static const Color kGray;
+  static const Color kGrey;
+  static const Color kYellow;
+  static const Color kMagenta;
+  static const Color kCyan;
 
   uint8_t r;
   uint8_t g;

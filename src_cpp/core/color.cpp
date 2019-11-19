@@ -12,6 +12,15 @@ namespace py = pybind11;
 
 const Color Color::kBlack(0, 0, 0);
 const Color Color::kWhite(255, 255, 255);
+const Color Color::kClear(0, 0, 0, 0);
+const Color Color::kRed(255, 0, 0);
+const Color Color::kGreen(0, 255, 0);
+const Color Color::kBlue(0, 0, 255);
+const Color Color::kGray(128, 128, 128);
+const Color Color::kGrey(128, 128, 128);
+const Color Color::kYellow(255, 255, 0);
+const Color Color::kMagenta(255, 0, 255);
+const Color Color::kCyan(0, 255, 255);
 
 Color::Color() : r(0), g(0), b(0), a(255) {}
 
@@ -108,6 +117,15 @@ void wrap_core_color(py::module& m) {
     // Constants.
     .def_readonly_static("BLACK", &Color::kBlack)
     .def_readonly_static("WHITE", &Color::kWhite)
+    .def_readonly_static("CLEAR", &Color::kClear)
+    .def_readonly_static("RED", &Color::kRed)
+    .def_readonly_static("GREEN", &Color::kGreen)
+    .def_readonly_static("BLUE", &Color::kBlue)
+    .def_readonly_static("GRAY", &Color::kGray)
+    .def_readonly_static("GREY", &Color::kGrey)
+    .def_readonly_static("YELLOW", &Color::kYellow)
+    .def_readonly_static("MAGENTA", &Color::kMagenta)
+    .def_readonly_static("CYAN", &Color::kCyan)
     // Functions & variables.
     .def_readwrite("r", &Color::r)
     .def_readwrite("g", &Color::g)
