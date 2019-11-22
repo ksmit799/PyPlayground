@@ -10,7 +10,8 @@ namespace py = pybind11;
 /**
  * Core submodule.
  */
-void wrap_core_playgroundbase(py::module& m);
+void wrap_core_playground_base(py::module& m);
+void wrap_core_playground_exception(py::module& m);
 void wrap_core_color(py::module& m);
 
 /**
@@ -27,7 +28,8 @@ PYBIND11_MODULE(pyplayground, m)
 {
 	// Core submodule.
 	py::module core = m.def_submodule("core", "");
-	wrap_core_playgroundbase(core);
+	wrap_core_playground_base(core);
+	wrap_core_playground_exception(core);
 	wrap_core_color(core);
 
 	// Display submodule.

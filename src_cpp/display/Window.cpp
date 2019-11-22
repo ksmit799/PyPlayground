@@ -2,6 +2,7 @@
 
 #include "pybind11/pybind11.h"
 #include "wrapper.h"
+#include "core/playground_exception.h"
 
 namespace playground {
 
@@ -23,7 +24,7 @@ Window::Window(PlaygroundBase* playground) {
   // Make sure the creation of the window was successful.
   if (sdl_window_ptr_ == nullptr) {
     py::print("[PLAYGROUND]: A window creation error occurred: ", SDL_GetError());
-    throw std::exception("Failed to create window");
+    throw PlaygroundException("Failed to create window");
   }
 }
 

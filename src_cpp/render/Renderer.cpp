@@ -5,6 +5,7 @@
 #include "pybind11/pybind11.h"
 #include "wrapper.h"
 #include "core/playground_base.h"
+#include "core/playground_exception.h"
 
 namespace playground {
 
@@ -25,7 +26,7 @@ Renderer::Renderer(PlaygroundBase* playground) {
   // Make sure the creation of the renderer was successful.
   if (sdl_renderer_ptr_ == nullptr) {
     py::print("[PLAYGROUND]: A renderer creation error occurred: ", SDL_GetError());
-    throw std::exception("Failed to create renderer");
+    throw PlaygroundException("Failed to create renderer");
   }
 
   SetBackgroundColor(Color::kBlack);
@@ -55,7 +56,7 @@ Color Renderer::GetBackgroundColor() {
   SDL_GetRenderDrawColor(sdl_renderer_ptr_,
                          &color.r, &color.g,
                          &color.b, &color.a);
-+
+
   return color;
 }
 

@@ -27,6 +27,8 @@ set(SRC_CPP_WRAPPER
 set(SRC_CPP_CORE
 	src_cpp/core/playground_base.h
 	src_cpp/core/playground_base.cpp
+	src_cpp/core/playground_exception.h
+	src_cpp/core/playground_exception.cpp
 	src_cpp/core/color.h
 	src_cpp/core/color.cpp
 )

@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include "pybind11/pybind11.h"
 #include "wrapper.h"
+#include "core/playground_exception.h"
 
 namespace playground {
 
@@ -15,7 +16,7 @@ PlaygroundBase::PlaygroundBase() {
   // This should only happen once during the programs lifetime.
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
     py::print("[PLAYGROUND]: An error occurred when initializing SDL: ", SDL_GetError());
-    throw std::exception("Failed to initialize SDL");
+    throw PlaygroundException("Failed to initialize SDL");
   }
 
   window = new Window(this);
@@ -40,7 +41,7 @@ PlaygroundBase* PlaygroundBase::instance() {
   return instance_ptr_;
 }
 
-void wrap_core_playgroundbase(py::module& m) {
+void wrap_core_playground_base(py::module& m) {
   py::class_<PlaygroundBase>(m, "PlaygroundBase")
     .def_static("instance", &PlaygroundBase::instance, "")
     .def_readonly("window", &PlaygroundBase::window, "")
