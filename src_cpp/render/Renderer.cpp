@@ -61,7 +61,9 @@ Color Renderer::GetBackgroundColor() {
 }
 
 void wrap_render_renderer(py::module& m) {
-  py::class_<Renderer>(m, "Renderer")
+  py::module renderer = m.def_submodule("renderer", "");
+
+  py::class_<Renderer>(renderer, "Renderer")
     .def("render", &Renderer::Render, "")
     .def("set_background_color", &Renderer::SetBackgroundColor, "")
     .def("get_background_color", &Renderer::GetBackgroundColor, "");

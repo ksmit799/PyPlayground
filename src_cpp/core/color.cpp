@@ -98,7 +98,9 @@ Color& operator *=(Color& left, const Color& right) {
 }
 
 void wrap_core_color(py::module& m) {
-  py::class_<Color>(m, "Color")
+  py::module color = m.def_submodule("color", "");
+
+  py::class_<Color>(color, "Color")
     // Constructors.
     .def(py::init<>())
     .def(py::init<const uint8_t&, const uint8_t&, const uint8_t&, const uint8_t&>())

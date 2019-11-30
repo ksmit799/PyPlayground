@@ -42,7 +42,9 @@ PlaygroundBase* PlaygroundBase::instance() {
 }
 
 void wrap_core_playground_base(py::module& m) {
-  py::class_<PlaygroundBase>(m, "PlaygroundBase")
+  py::module playground_base = m.def_submodule("playground_base", "");
+
+  py::class_<PlaygroundBase>(playground_base, "PlaygroundBase")
     .def_static("instance", &PlaygroundBase::instance, "")
     .def_readonly("window", &PlaygroundBase::window, "")
     .def_readonly("renderer", &PlaygroundBase::renderer, "");

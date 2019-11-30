@@ -37,7 +37,9 @@ SDL_Window* Window::get_sdl_window() {
 }
 
 void wrap_display_window(py::module& m) {
-  py::class_<Window>(m, "Window");
+  py::module window = m.def_submodule("window", "");
+
+  py::class_<Window>(window, "Window");
 }
 
 } // namespace playground

@@ -24,7 +24,7 @@ void wrap_display_window(py::module& m);
  */
 void wrap_render_renderer(py::module& m);
 
-PYBIND11_MODULE(pyplayground, m)
+PYBIND11_MODULE(_pyplayground, m)
 {
 	// Core submodule.
 	py::module core = m.def_submodule("core", "");
