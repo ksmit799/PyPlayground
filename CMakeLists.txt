@@ -9,8 +9,8 @@ project(_pyplayground)
 # Set CMake module/source directories.
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
-# C++ 11 standard.
-set(CMAKE_CXX_STANDARD 11)
+# C++ 14 standard.
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Add our pybind11 lib.
