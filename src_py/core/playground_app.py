@@ -7,6 +7,7 @@ import builtins
 
 from pyplayground.core.playground_base import PlaygroundBase
 from pyplayground.core.playground_exception import PlaygroundException
+from pyplayground.task.task_manager import TaskManager
 
 class PlaygroundApp:
 
@@ -19,6 +20,7 @@ class PlaygroundApp:
 
         self.window = self.instance.window
         self.renderer = self.instance.renderer
+        self.task_manager = self.instance.task_manager
 
         # Make sure we're not instantiating more then one PlaygroundApp.
         if hasattr(builtins, 'playground_app'):
@@ -31,7 +33,7 @@ class PlaygroundApp:
 
     def loop(self):
         """Run once through the PyPlayground app loop."""
-        self.renderer.render()
+        self.task_manager.run()
 
     def run(self):
         """Start running the blocking app loop."""
@@ -44,4 +46,4 @@ class PlaygroundApp:
         """Stop running the app loop and cleanup."""
         self.__running = False
         del builtins.playground_app
-        del self.instance
+        self.instance.quit()

@@ -64,7 +64,7 @@ setup(
 	author_email='kyle.smith@trapdoorstudios.com.au',
 	description='The PyPlayground open-source game engine',
 	long_description='',
-	packages=['pyplayground', 'pyplayground.core'],
+	packages=['pyplayground', 'pyplayground.core', 'pyplayground.task'],
 	package_dir={'pyplayground': 'src_py'},
 	ext_modules=[CMakeExtension('PyPlayground')],
 	cmdclass=dict(build_ext=CMakeBuild),

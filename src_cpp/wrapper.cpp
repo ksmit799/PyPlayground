@@ -24,6 +24,12 @@ void wrap_display_window(py::module& m);
  */
 void wrap_render_renderer(py::module& m);
 
+/**
+ * Task submodule.
+ */
+void wrap_task_task_manager(py::module& m);
+void wrap_task_task(py::module& m);
+
 PYBIND11_MODULE(_pyplayground, m)
 {
 	// Core submodule.
@@ -39,6 +45,11 @@ PYBIND11_MODULE(_pyplayground, m)
 	// Render submodule.
 	py::module render = m.def_submodule("render", "");
 	wrap_render_renderer(render);
+
+	// Task submodule.
+	py::module task = m.def_submodule("task", "");
+	wrap_task_task_manager(task);
+	wrap_task_task(task);
 }
 
 } // namespace playground

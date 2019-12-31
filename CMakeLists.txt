@@ -47,12 +47,20 @@ set(SRC_CPP_RENDER
   src_cpp/render/renderer.cpp
 )
 
+set(SRC_CPP_TASK
+  src_cpp/task/task_manager.h
+  src_cpp/task/task_manager.cpp
+  src_cpp/task/task.h
+  src_cpp/task/task.cpp
+)
+
 # All cpp source files.
 set(SOURCE_CPP
   ${SRC_CPP_WRAPPER}
   ${SRC_CPP_CORE}
   ${SRC_CPP_DISPLAY}
   ${SRC_CPP_RENDER}
+  ${SRC_CPP_TASK}
 )
 
 # Generate Python bindings for our source files.

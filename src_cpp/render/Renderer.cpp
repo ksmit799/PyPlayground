@@ -37,9 +37,6 @@ Renderer::~Renderer() {
 }
 
 void Renderer::Render() {
-  SDL_Event e;
-  SDL_PollEvent(&e);
-
   SDL_RenderClear(sdl_renderer_ptr_);
   SDL_RenderPresent(sdl_renderer_ptr_);
 }
