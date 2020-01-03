@@ -7,7 +7,6 @@ import builtins
 
 from pyplayground.core.playground_base import PlaygroundBase
 from pyplayground.core.playground_exception import PlaygroundException
-from pyplayground.task.task_manager import TaskManager
 
 class PlaygroundApp:
 
