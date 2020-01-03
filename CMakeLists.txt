@@ -45,6 +45,8 @@ set(SRC_CPP_DISPLAY
 set(SRC_CPP_RENDER
   src_cpp/render/renderer.h
   src_cpp/render/renderer.cpp
+  src_cpp/render/container.h
+  src_cpp/render/container.cpp
 )
 
 set(SRC_CPP_TASK

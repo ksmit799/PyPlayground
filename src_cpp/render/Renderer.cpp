@@ -29,6 +29,8 @@ Renderer::Renderer(PlaygroundBase* playground) {
     throw PlaygroundException("Failed to create renderer");
   }
 
+  container_root_ = std::make_unique<Container>();
+
   SetBackgroundColor(Color::kBlack);
 }
 
@@ -38,7 +40,18 @@ Renderer::~Renderer() {
 
 void Renderer::Render() {
   SDL_RenderClear(sdl_renderer_ptr_);
+
+  container_root_->RenderPass(this);
+
   SDL_RenderPresent(sdl_renderer_ptr_);
+}
+
+void Renderer::AddChild(Container* child) {
+  container_root_->AddChild(child);
+}
+
+void Renderer::RemoveChild(Container* child) {
+  container_root_->RemoveChild(child);
 }
 
 void Renderer::SetBackgroundColor(const Color& color) {
@@ -62,6 +75,8 @@ void wrap_render_renderer(py::module& m) {
 
   py::class_<Renderer>(renderer, "Renderer")
     .def("render", &Renderer::Render, "")
+    .def("add_child", &Renderer::AddChild, "")
+    .def("remove_child", &Renderer::RemoveChild, "")
     .def("set_background_color", &Renderer::SetBackgroundColor, "")
     .def("get_background_color", &Renderer::GetBackgroundColor, "");
 }

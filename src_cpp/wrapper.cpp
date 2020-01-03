@@ -23,6 +23,7 @@ void wrap_display_window(py::module& m);
  * Render submodule.
  */
 void wrap_render_renderer(py::module& m);
+void wrap_render_container(py::module& m);
 
 /**
  * Task submodule.
@@ -45,6 +46,7 @@ PYBIND11_MODULE(_pyplayground, m)
 	// Render submodule.
 	py::module render = m.def_submodule("render", "");
 	wrap_render_renderer(render);
+	wrap_render_container(render);
 
 	// Task submodule.
 	py::module task = m.def_submodule("task", "");

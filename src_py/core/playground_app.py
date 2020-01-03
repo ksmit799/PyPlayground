@@ -31,6 +31,14 @@ class PlaygroundApp:
         # future we may want to make this a global variable.
         builtins.playground_app = self
 
+    def add_child(self, child):
+        """"""
+        self.renderer.add_child(child)
+
+    def remove_child(self, child):
+        """"""
+        self.renderer.remove_child(child)
+
     def loop(self):
         """Run once through the PyPlayground app loop."""
         self.task_manager.run()
