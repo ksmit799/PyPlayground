@@ -2,8 +2,7 @@
 
 #include "pybind11/pybind11.h"
 
-namespace playground
-{
+namespace playground {
 
 namespace py = pybind11;
 
@@ -31,8 +30,7 @@ void wrap_render_container(py::module& m);
 void wrap_task_task_manager(py::module& m);
 void wrap_task_task(py::module& m);
 
-PYBIND11_MODULE(_pyplayground, m)
-{
+PYBIND11_MODULE(_pyplayground, m) {
 	// Core submodule.
 	py::module core = m.def_submodule("core", "");
 	wrap_core_playground_base(core);
