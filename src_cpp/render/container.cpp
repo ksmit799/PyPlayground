@@ -15,7 +15,25 @@ Container::Container() : active_(true), parent_(nullptr) {
 }
 
 Container::~Container() {
-  
+  Destroy();
+}
+
+void Container::Destroy() {
+  // We're no longer active.
+  SetActive(false);
+
+  // If we have a parent, remove ourself.
+  if (parent_ != nullptr) {
+    parent_->RemoveChild(this);
+  }
+
+  // Children are recursively destroyed as well.
+  for (Container* child : children_) {
+    child->Destroy();
+  }
+
+  assert(parent_ == nullptr);
+  assert(children_.empty());
 }
 
 void Container::RenderPass(Renderer* renderer) {
@@ -70,10 +88,14 @@ void wrap_render_container(py::module& m) {
   py::module container = m.def_submodule("container", "");
 
   py::class_<Container>(container, "Container")
+    // Constructors.
     .def(py::init<>())
+    // Functions & variables.
+    .def("destroy", &Container::Destroy, "")
     .def("set_active", &Container::SetActive, "")
     .def("add_child", &Container::AddChild, "")
-    .def("remove_child", &Container::RemoveChild, "");
+    .def("remove_child", &Container::RemoveChild, "")
+    .def_readwrite("active", &Container::active_);
 }
 
 } // namespace playground

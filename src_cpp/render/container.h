@@ -12,6 +12,8 @@ class Container {
   Container();
   ~Container();
 
+  void Destroy();
+
   void RenderPass(Renderer* renderer);
   virtual void Render(Renderer* renderer);
 
