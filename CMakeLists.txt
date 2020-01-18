@@ -37,6 +37,20 @@ set(SRC_CPP_CORE
   src_cpp/core/color.cpp
 )
 
+set(SRC_CPP_TASK
+  src_cpp/task/task_manager.h
+  src_cpp/task/task_manager.cpp
+  src_cpp/task/task.h
+  src_cpp/task/task.cpp
+)
+
+set(SRC_CPP_EVENT
+  src_cpp/event/event_emitter.h
+  src_cpp/event/event_emitter.cpp
+  src_cpp/event/event.h
+  src_cpp/event/event.cpp
+)
+
 set(SRC_CPP_DISPLAY
   src_cpp/display/window.h
   src_cpp/display/window.cpp
@@ -49,20 +63,14 @@ set(SRC_CPP_RENDER
   src_cpp/render/container.cpp
 )
 
-set(SRC_CPP_TASK
-  src_cpp/task/task_manager.h
-  src_cpp/task/task_manager.cpp
-  src_cpp/task/task.h
-  src_cpp/task/task.cpp
-)
-
 # All cpp source files.
 set(SOURCE_CPP
   ${SRC_CPP_WRAPPER}
   ${SRC_CPP_CORE}
+  ${SRC_CPP_TASK}
+  ${SRC_CPP_EVENT}
   ${SRC_CPP_DISPLAY}
   ${SRC_CPP_RENDER}
-  ${SRC_CPP_TASK}
 )
 
 # Generate Python bindings for our source files.

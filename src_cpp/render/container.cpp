@@ -34,6 +34,9 @@ void Container::Destroy() {
 
   assert(parent_ == nullptr);
   assert(children_.empty());
+
+  // Explicitly destruct event emitter.
+  EventEmitter::Destroy();
 }
 
 void Container::RenderPass(Renderer* renderer) {
@@ -87,7 +90,7 @@ void Container::RemoveChild(Container* child) {
 void wrap_render_container(py::module& m) {
   py::module container = m.def_submodule("container", "");
 
-  py::class_<Container>(container, "Container")
+  py::class_<Container, EventEmitter>(container, "Container")
     // Constructors.
     .def(py::init<>())
     // Functions & variables.

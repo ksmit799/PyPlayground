@@ -3,11 +3,13 @@
 
 #include <list>
 
+#include "event/event_emitter.h"
+
 namespace playground {
 
 class Renderer;
 
-class Container {
+class Container : public virtual EventEmitter {
  public:
   Container();
   ~Container();

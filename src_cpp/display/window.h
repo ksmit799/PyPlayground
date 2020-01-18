@@ -2,6 +2,7 @@
 #define DISPLAY_WINDOW_H_
 
 #include "SDL.h"
+#include "event/event_emitter.h"
 
 namespace playground {
 
