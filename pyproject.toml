@@ -1,0 +1,5 @@
+[tool.black]
+include = 'src_py\/.*\.pyi?$'
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
