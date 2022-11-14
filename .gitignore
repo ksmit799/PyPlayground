@@ -1,7 +1,11 @@
-# Python Byte-compiled 
+# Python Byte-compiled
 __pycache__/
 *.py[cod]
 *$py.class
+*.egg-info
 
 # Ignore MacOS DS_Store files.
 .DS_Store
+
+# Ignore .idea files.
+.idea

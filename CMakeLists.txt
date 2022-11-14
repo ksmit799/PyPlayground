@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.4)
 
 # This CMake file describes the private (compiled) implementation of PyPlayground.
 # It outputs a '_pyplayground.xxx' lib that's imported via the Python implementation.
@@ -6,19 +6,16 @@ cmake_minimum_required(VERSION 3.2)
 
 project(_pyplayground)
 
-# Set CMake module/source directories.
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
-
 # C++ 14 standard.
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Add our pybind11 lib.
-add_subdirectory(deps/pybind11)
+add_subdirectory(lib/pybind11)
 
 # Include SDL2.
 find_package(SDL2 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIRS})
+include_directories(${SDL2_INCLUDE_DIR})
 
 # Include cpp source files.
 include_directories("${CMAKE_SOURCE_DIR}/src_cpp/")
