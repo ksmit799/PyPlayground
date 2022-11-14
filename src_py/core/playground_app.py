@@ -1,15 +1,15 @@
 """
 """
 
-__all__ = ['PlaygroundApp']
+__all__ = ["PlaygroundApp"]
 
 import builtins
 
 from pyplayground.core.playground_base import PlaygroundBase
 from pyplayground.core.playground_exception import PlaygroundException
 
-class PlaygroundApp:
 
+class PlaygroundApp:
     def __init__(self):
         # Is the main app loop running?
         # Mangle to avoid potential conflicts in inheritors.
@@ -22,8 +22,10 @@ class PlaygroundApp:
         self.task_manager = self.instance.task_manager
 
         # Make sure we're not instantiating more then one PlaygroundApp.
-        if hasattr(builtins, 'playground_app'):
-            raise PlaygroundException("Attempted to create multiple PlaygroundApp instances!")
+        if hasattr(builtins, "playground_app"):
+            raise PlaygroundException(
+                "Attempted to create multiple PlaygroundApp instances!"
+            )
 
         # TODO(Ksmit799): Currently, we make playground_app a builtin singleton pointer.
         # This is mainly for ease of use (especially for new programmers), however in the
