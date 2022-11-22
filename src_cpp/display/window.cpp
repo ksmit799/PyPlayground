@@ -1,7 +1,6 @@
 #include "display/window.h"
 
 #include "pybind11/pybind11.h"
-#include "wrapper.h"
 #include "core/playground_exception.h"
 
 namespace playground {

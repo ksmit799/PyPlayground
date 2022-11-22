@@ -9,10 +9,9 @@ namespace playground {
 class PlaygroundException : public std::exception {
  public:
   PlaygroundException();
-  PlaygroundException(const std::string& desc);
-  ~PlaygroundException() throw() {}
+  explicit PlaygroundException(std::string  desc);
   
-  const char* what() const noexcept { return description.c_str(); }
+  [[nodiscard]] const char* what() const noexcept override { return description.c_str(); }
 
  protected:
   std::string description;

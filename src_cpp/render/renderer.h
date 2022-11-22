@@ -13,7 +13,7 @@ class PlaygroundBase;
 
 class Renderer {
  public:
-  Renderer(PlaygroundBase* playground);
+  explicit Renderer(PlaygroundBase* playground);
   ~Renderer();
 
   void Render();

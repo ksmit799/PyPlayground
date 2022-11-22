@@ -1,7 +1,7 @@
 # PyPlayground
 
-![Python](https://img.shields.io/badge/python-3.6%2B-blue.svg)
-![C++](https://img.shields.io/badge/C%2B%2B-11-ff69b4.svg)
+![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)
+![C++](https://img.shields.io/badge/C%2B%2B-17-ff69b4.svg)
 ![GitHub Issues](https://img.shields.io/github/issues-raw/ksmit799/pyplayground.svg)
 ![License](https://img.shields.io/github/license/ksmit799/pyplayground.svg)
 

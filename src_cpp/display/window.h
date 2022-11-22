@@ -9,7 +9,7 @@ class PlaygroundBase;
 
 class Window {
  public:
-  Window(PlaygroundBase* playground);
+  explicit Window(PlaygroundBase* playground);
   ~Window();
 
   SDL_Window* get_sdl_window();

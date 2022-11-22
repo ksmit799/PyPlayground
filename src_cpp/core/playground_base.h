@@ -14,7 +14,7 @@ class PlaygroundBase {
  public:
   ~PlaygroundBase();
 
-  void Quit();
+  void Quit() const;
 
   static PlaygroundBase* instance();
 

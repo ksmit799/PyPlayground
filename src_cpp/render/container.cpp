@@ -3,7 +3,6 @@
 #include <algorithm>
 
 #include "pybind11/pybind11.h"
-#include "wrapper.h"
 #include "render/renderer.h"
 
 namespace playground {
@@ -77,7 +76,7 @@ void Container::AddChild(Container* child) {
 
 void Container::RemoveChild(Container* child) {
   // Remove the child if it's one of our children.
-  std::list<Container*>::iterator child_index = std::find(children_.begin(), children_.end(), child);
+  auto child_index = std::find(children_.begin(), children_.end(), child);
   if (child_index != children_.end()) {
     child->parent_ = nullptr;
     children_.erase(child_index);

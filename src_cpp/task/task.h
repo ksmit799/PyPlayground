@@ -13,14 +13,14 @@ class TaskManager;
 
 class Task : public std::enable_shared_from_this<Task> {
  public:
-  Task(TaskManager* manager, const std::string& name,
-       const std::function<void()>& func, const int& priority = Task::kNormal,
+  Task(TaskManager* manager, std::string  name,
+       std::function<void()>  func, const int& priority = Task::kNormal,
        const bool& threaded = false, const int& delay = 0);
   ~Task();
 
   void Start();
   void Stop();
-  void Run();
+  void Run() const;
 
   enum Priority {
     kCritical = 50,

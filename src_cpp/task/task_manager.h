@@ -1,8 +1,7 @@
 #ifndef TASK_TASK_MANAGER_H_
 #define TASK_TASK_MANAGER_H_
 
-#include <stdint.h>
-
+#include <cstdint>
 #include <atomic>
 #include <memory>
 #include <deque>
@@ -18,7 +17,7 @@ class PlaygroundBase;
 
 class TaskManager {
  public:
-  TaskManager(PlaygroundBase* playground);
+  explicit TaskManager(PlaygroundBase* playground);
   ~TaskManager();
 
   void Shutdown();

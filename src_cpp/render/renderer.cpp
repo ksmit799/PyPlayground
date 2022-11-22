@@ -1,9 +1,8 @@
 #include "render/renderer.h"
 
-#include <assert.h>
+#include <cassert>
 
 #include "pybind11/pybind11.h"
-#include "wrapper.h"
 #include "core/playground_base.h"
 #include "core/playground_exception.h"
 

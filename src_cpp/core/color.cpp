@@ -4,7 +4,6 @@
 
 #include "pybind11/pybind11.h"
 #include "pybind11/operators.h"
-#include "wrapper.h"
 
 namespace playground {
 
@@ -51,7 +50,7 @@ Color::Color(std::string hex_string) : a(255) {
   b = ((hex_int & 0x0000FF) >> 0);
 }
 
-Color::~Color() {}
+Color::~Color() = default;
 
 bool operator ==(const Color& left, const Color& right) {
   return (left.r == right.r) &&
@@ -65,24 +64,24 @@ bool operator !=(const Color& left, const Color& right) {
 }
 
 Color operator +(const Color& left, const Color& right) {
-  return Color(uint8_t(std::min(int(left.r) + right.r, 255)),
+  return Color{uint8_t(std::min(int(left.r) + right.r, 255)),
                uint8_t(std::min(int(left.g) + right.g, 255)),
                uint8_t(std::min(int(left.b) + right.b, 255)),
-               uint8_t(std::min(int(left.a) + right.a, 255)));
+               uint8_t(std::min(int(left.a) + right.a, 255))};
 }
 
 Color operator -(const Color& left, const Color& right) {
-  return Color(uint8_t(std::max(int(left.r) - right.r, 0)),
+  return Color{uint8_t(std::max(int(left.r) - right.r, 0)),
                uint8_t(std::max(int(left.g) - right.g, 0)),
                uint8_t(std::max(int(left.b) - right.b, 0)),
-               uint8_t(std::max(int(left.a) - right.a, 0)));
+               uint8_t(std::max(int(left.a) - right.a, 0))};
 }
 
 Color operator *(const Color& left, const Color& right) {
-  return Color(uint8_t(int(left.r) * right.r / 255),
+  return Color{uint8_t(int(left.r) * right.r / 255),
                uint8_t(int(left.g) * right.g / 255),
                uint8_t(int(left.b) * right.b / 255),
-               uint8_t(int(left.a) * right.a / 255));
+               uint8_t(int(left.a) * right.a / 255)};
 }
 
 Color& operator +=(Color& left, const Color& right) {

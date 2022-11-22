@@ -20,10 +20,7 @@ include_directories(${SDL2_INCLUDE_DIR})
 # Include cpp source files.
 include_directories("${CMAKE_SOURCE_DIR}/src_cpp/")
 
-set(SRC_CPP_WRAPPER
-  src_cpp/wrapper.h
-  src_cpp/wrapper.cpp
-)
+set(SRC_CPP_WRAPPER src_cpp/wrapper.cpp)
 
 set(SRC_CPP_CORE
   src_cpp/core/playground_base.h

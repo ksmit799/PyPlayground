@@ -1,19 +1,18 @@
 #include "task/task.h"
 
-#include <assert.h>
+#include <utility>
 
 #include "pybind11/operators.h"
-#include "wrapper.h"
 #include "task/task_manager.h"
 
 namespace playground {
 
 namespace py = pybind11;
 
-Task::Task(TaskManager* manager, const std::string& name,
-           const std::function<void()>& func, const int& priority,
+Task::Task(TaskManager* manager, std::string  name,
+           std::function<void()> func, const int& priority,
            const bool& threaded, const int& delay)
-  : manager_ptr_(manager), task_name_(name), task_function_(func),
+  : manager_ptr_(manager), task_name_(std::move(name)), task_function_(std::move(func)),
     task_priority_(priority), task_threaded_(threaded), task_delay_(delay) {
 
   task_state_ = ServiceState::kInactive;
@@ -39,7 +38,7 @@ void Task::Stop() {
   manager_ptr_->RemoveTask(shared_from_this());
 }
 
-void Task::Run() {
+void Task::Run() const {
   task_function_();
 }
 

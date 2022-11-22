@@ -2,7 +2,6 @@
 
 #include "SDL.h"
 #include "pybind11/pybind11.h"
-#include "wrapper.h"
 #include "core/playground_exception.h"
 
 namespace playground {
@@ -35,7 +34,7 @@ PlaygroundBase::~PlaygroundBase() {
   Quit();
 }
 
-void PlaygroundBase::Quit() {
+void PlaygroundBase::Quit() const {
   instance_ptr_ = nullptr;
 
   task_manager->Shutdown();

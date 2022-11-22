@@ -1,19 +1,17 @@
 #include "task/task_manager.h"
 
-#include <assert.h>
-
+#include <cassert>
 #include <algorithm>
 #include <string>
 
 #include "pybind11/pybind11.h"
-#include "wrapper.h"
 #include "core/playground_base.h"
 
 namespace playground {
 
 namespace py = pybind11;
 
-TaskManager::TaskManager(PlaygroundBase* playground) {
+TaskManager::TaskManager(PlaygroundBase* playground) : running_(true) {
   playground_ptr_ = playground;
 
   // The amount of task threads should always be between 1 and (N - 1)
@@ -26,8 +24,6 @@ TaskManager::TaskManager(PlaygroundBase* playground) {
   for (uint16_t i = 0; i < num_task_threads_; ++i) {
     task_threads_.emplace_back(&TaskManager::ThreadedRun, this);
   }
-
-  running_ = true;
 }
 
 TaskManager::~TaskManager() {
